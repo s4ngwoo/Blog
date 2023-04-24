@@ -2,6 +2,9 @@
 from django.urls import path
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 app_name = 'blog'
 
 urlpatterns = [
@@ -11,3 +14,5 @@ urlpatterns = [
         path('archive/', views.Archive.as_view(), name='archive'),
         path('<int:post_pk>/', views.PostDetail.as_view(), name='post_detail'),
         ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

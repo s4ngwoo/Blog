@@ -23,7 +23,8 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
     post_pk = models.AutoField(primary_key=True)
-    head_image = models.ImageField(upload_to = 'static/_media/blog/images/%y/%m/%d/', blank=True)
+    head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
+    file_upload = models.FileField(upload_to = 'files/%y/%m/%d/', blank=True)
     
     class Meta:
         ordering = ['-created_on']
@@ -35,7 +36,7 @@ class Post(models.Model):
         return f"{self.post_pk}/"
 
     def get_head_image_url(self):
-        return f"/{self.head_image}"
+        return f"{self.head_image}"
 
 class About(models.Model):
     title = models.CharField(max_length=200, unique=True, null=True)
