@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header-background-image %}
+    {% if post.head_image %}
+    {{ post.get_head_image_url }}
+    {% endif %}
+{% endblock %}
+
+{% block header-h1 %}
+{{ post.title }}
+{% endblock %}
+
+{% block header-subheading %}
+{{ post.subtitle }}
+{% endblock %}
+
+{% block meta %}
+<a href="#!">{{ post.author }}</a>
+    {{ post.created_on }}
+</span>
+{% endblock %}
+{% block body %}
+        <article class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+{{ post.content }}
+<br>
+{{ post.head_image }}
+                    </div>
+                </div>
+            </div>
+        </article>
+{% endblock %}
