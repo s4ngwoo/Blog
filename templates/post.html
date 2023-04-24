@@ -3,7 +3,9 @@
 
 {% block header-background-image %}
     {% if post.head_image %}
-    {{ post.head_image.url }}
+        {{ post.head_image.url }}
+    {% else %}
+    {% static 'assets/img/post-bg.jpg' %}
     {% endif %}
 {% endblock %}
 
