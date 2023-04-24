@@ -17,7 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     subtitle = models.TextField(null=True)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='blog_posts')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
