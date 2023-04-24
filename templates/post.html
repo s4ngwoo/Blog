@@ -5,7 +5,7 @@
     {% if post.head_image %}
         {{ post.head_image.url }}
     {% else %}
-    {% static 'assets/img/post-bg.jpg' %}
+    https://picsum.photos/seed/{{ post.post_pk }}/1600/800
     {% endif %}
 {% endblock %}
 
