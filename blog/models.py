@@ -17,7 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     subtitle = models.TextField(null=True)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='blog_posts')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
@@ -30,7 +30,7 @@ class Post(models.Model):
         ordering = ['-created_on']
 
     def __str__(self):
-        return self.title
+        return f"[{self.pk}]{self.title} :: {self.author}"
 
     def get_absolute_url(self):
         return f"{self.post_pk}/"
