@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-STATUS = (
+BRANCH = (
         (0, "Draft"),
         (1, "Publish")
         )
@@ -13,14 +13,23 @@ LANGUAGE = (
         (1, "English")
         )
 
+#class Basics(models.Model):
+    #title = models.CharField(max_length=200, unique=True)
+    #subtitle = models.TextField(null=True)
+    #content = models.TextField()
+    #created_at = models.DateTimeField(auto_now_add=True)
+    #updated_at = models.DateTimeField(auto_now=True)
+    #head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
+
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     subtitle = models.TextField(null=True)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='post_author')
+    series = models.ForeignKey(Series, on_delete=CASCADE, related_name='post_series') 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=STATUS, default=0)
+    branch = models.IntegerField(choices=BRANCH, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
     post_pk = models.AutoField(primary_key=True)
     head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
@@ -37,6 +46,20 @@ class Post(models.Model):
 
     def get_head_image_url(self):
         return f"{self.head_image}"
+
+class Category(models.Model):
+    pass
+
+class Series(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+    subtitle = models.TextField(null=True)
+    content = models.TexitField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
+
+class tag(models.Model):
+    pass
 
 
 class About(models.Model):
