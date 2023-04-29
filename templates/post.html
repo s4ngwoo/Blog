@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block meta %}
-{{ post.created_on }}
+{{ post.created_at|date:"Y. m. d l" }}
 </span>
 {% endblock %}
 {% block body %}

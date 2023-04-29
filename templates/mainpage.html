@@ -21,11 +21,9 @@
                                 <a href="{{ p.post_pk }}">
                                     <h2 class="post-title">{{ p.title }}</h2>
                                 </a>
-                                <h3 class="post-subtitle">{{ p.subtitle }}<br><p>{{ p.get_absolute_url }}</h3>
+                                <h3 class="post-subtitle">{{ p.subtitle }}</h3>
                                 <p class="post-meta">
-                                    Posted by
-                                    <a href="#!">{{ p.author }}</a>
-                                    on {{ p.created_on }}
+                                    {{ p.created_at|date:"Y. m. d l" }}
                                 </p>
                             </div>
                             <!-- Divider-->

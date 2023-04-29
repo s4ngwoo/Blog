@@ -20,8 +20,6 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_on = models.DateField(auto_now_add=True)
-    updated_on = models.DateField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
     post_pk = models.AutoField(primary_key=True)

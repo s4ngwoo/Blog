@@ -8,13 +8,13 @@ class MainPage(ListView):
     model = Post
     template_name = 'mainpage.html'
     context_object_name = 'posts'
-    ordering = ['-created_on']
+    ordering = ['-created_at']
 
 class Archive(ListView):
     model = Post
     template_name = 'mainpage.html'
     context_object_name = 'posts'
-    ordering = ['-created_on']
+    ordering = ['-created_at']
 
 class PostDetail(DetailView):
     model = Post
