@@ -15,7 +15,7 @@ LANGUAGE = (
 
 class TitleContent(models.Model):
     title = models.CharField(max_length=50, unique=True)
-    content = models.TextField(blank=True)
+    content = models.TextField(null=True, blank=True)
     class Meta:
         abstract = True
     def __str__(self):
@@ -48,9 +48,9 @@ class Post(TitleContent, TimeLogger, HeadImage):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
     branch = models.IntegerField(choices=BRANCH, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
-    category = models.ForeignKey('PostCategory', on_delete=models.PROTECT, related_name='post_category')
-    series = models.ForeignKey('PostSeries', on_delete=models.PROTECT, related_name='post_series')
-    tag = models.ForeignKey('PostTag', on_delete=models.PROTECT, related_name='post_tag')
+    category = models.ForeignKey('PostCategory', on_delete=models.PROTECT, related_name='post_category', null=True, blank=True)
+    series = models.ForeignKey('PostSeries', on_delete=models.PROTECT, related_name='post_series', null=True, blank=True)
+    tag = models.ForeignKey('PostTag', on_delete=models.PROTECT, related_name='post_tag', null=True, blank=True)
     def __str__(self):
         return f"[{self.pk}]:{self.title}"
     def get_absolute_url(self):
