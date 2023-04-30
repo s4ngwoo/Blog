@@ -16,9 +16,9 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
                     {% for p in posts %}
-                        {% if p.status == 1 %}
+                        {% if p.branch == 1 %}
                             <div class="post-preview">
-                                <a href="{{ p.post_pk }}">
+                                <a href="{{ p.id }}">
                                     <h2 class="post-title">{{ p.title }}</h2>
                                 </a>
                                 <h3 class="post-subtitle">{{ p.subtitle }}</h3>
@@ -28,7 +28,7 @@
                             </div>
                             <!-- Divider-->
                             <hr class="my-4" />
-                        {% elif p.status == 0 %}
+                        {% elif p.branch == 0 %}
                         {% else %}
                             somethings wrong.
                         {% endif %}

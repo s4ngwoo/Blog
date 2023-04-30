@@ -22,8 +22,8 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
     def get_object(self, queryset=None):
-        post_pk = self.kwargs['post_pk']
-        return self.model.objects.get(post_pk=post_pk)
+        id = self.kwargs['id']
+        return self.model.objects.get(id=id)
 
 class AboutDetail(TemplateView):
     template_name = 'about.html'

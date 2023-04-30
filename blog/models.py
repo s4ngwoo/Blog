@@ -13,60 +13,49 @@ LANGUAGE = (
         (1, "English")
         )
 
-#class Basics(models.Model):
-    #title = models.CharField(max_length=200, unique=True)
-    #subtitle = models.TextField(null=True)
-    #content = models.TextField()
-    #created_at = models.DateTimeField(auto_now_add=True)
-    #updated_at = models.DateTimeField(auto_now=True)
-    #head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
-
-class Post(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    subtitle = models.TextField(null=True)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='post_author')
-    series = models.ForeignKey(Series, on_delete=CASCADE, related_name='post_series') 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    branch = models.IntegerField(choices=BRANCH, default=0)
-    language = models.IntegerField(choices=LANGUAGE, default=0)
-    post_pk = models.AutoField(primary_key=True)
-    head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
-    file_upload = models.FileField(upload_to = 'files/%y/%m/%d/', blank=True)
-    
+class TitleContent(models.Model):
+    title = models.CharField(max_length=50, unique=True)
+    content = models.TextField(blank=True)
     class Meta:
-        ordering = ['-created_at']
-
+        abstract = True
     def __str__(self):
-        return f"[{self.pk}]{self.title} :: {self.author}"
+        return f"{self.title}"
 
-    def get_absolute_url(self):
-        return f"{self.post_pk}/"
-
+class HeadImage(models.Model):
+    head_image = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True)
+    class Meta:
+        abstract = True
     def get_head_image_url(self):
         return f"{self.head_image}"
 
-class Category(models.Model):
-    pass
-
-class Series(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    subtitle = models.TextField(null=True)
-    content = models.TexitField()
+class TimeLogger(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    head_image = models.ImageField(upload_to = 'images/%y/%m/%d/', blank=True)
+    class Meta:
+        abstract = True
 
-class tag(models.Model):
+class PostCategory(TitleContent, TimeLogger, HeadImage):
     pass
 
+class PostSeries(TitleContent, TimeLogger, HeadImage):
+    pass
 
-class About(models.Model):
-    title = models.CharField(max_length=200, unique=True, null=True)
-    content = models.TextField()
-    updated_on = models.DateTimeField(auto_now=True)
+class PostTag(TitleContent, TimeLogger):
+    title = models.CharField(max_length=50, unique=True)
+
+class Post(TitleContent, TimeLogger, HeadImage):
+    subtitle = models.TextField(null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
+    branch = models.IntegerField(choices=BRANCH, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
-
+    category = models.ForeignKey('PostCategory', on_delete=models.PROTECT, related_name='post_category')
+    series = models.ForeignKey('PostSeries', on_delete=models.PROTECT, related_name='post_series')
+    tag = models.ForeignKey('PostTag', on_delete=models.PROTECT, related_name='post_tag')
     def __str__(self):
-        return self.title
+        return f"[{self.pk}]:{self.title}"
+    def get_absolute_url(self):
+        return f"{self.pk}/"
+
+
+class About(TitleContent, TimeLogger):
+    language = models.IntegerField(choices=LANGUAGE, default=0)
