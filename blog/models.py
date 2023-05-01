@@ -18,6 +18,7 @@ class TitleContent(models.Model):
     content = models.TextField(null=True, blank=True)
     class Meta:
         abstract = True
+
     def __str__(self):
         return f"{self.title}"
 
@@ -54,7 +55,7 @@ class Post(TitleContent, TimeLogger, HeadImage):
     def __str__(self):
         return f"[{self.pk}]:{self.title}"
     def get_absolute_url(self):
-        return f"{self.pk}/"
+        return f"/{self.pk}/"
 
 
 class About(TitleContent, TimeLogger):
