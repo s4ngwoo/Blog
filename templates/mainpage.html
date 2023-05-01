@@ -13,18 +13,15 @@
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="col-md-10 col-lg-8 col-xl-7", id='main-area'>
                     <!-- Post preview-->
+                {% if posts.exists %}
                     {% for p in posts %}
                         {% if p.branch == 1 %}
                             <div class="post-preview">
-                                <a href="{{ p.id }}">
-                                    <h2 class="post-title">{{ p.title }}</h2>
-                                </a>
-                                <h3 class="post-subtitle">{{ p.subtitle }}</h3>
-                                <p class="post-meta">
-                                    {{ p.created_at|date:"Y. m. d l" }}
-                                </p>
+                                <a href="{{ p.id }}"> <h2 class="post-title">{{ p.title }}</h2> </a>
+                                <h4 class="post-subtitle">{{ p.subtitle }}</h4>
+                                <p class="post-meta"> {{ p.created_at|date:"Y. m. d l" }} </p>
                             </div>
                             <!-- Divider-->
                             <hr class="my-4" />
@@ -34,6 +31,9 @@
                             p.branch = {{ p.branch }}
                         {% endif %}
                     {% endfor %}
+                {% else %}
+                    <h3>No Post.</h3>
+                {% endif %}
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
                 </div>
