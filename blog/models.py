@@ -44,7 +44,7 @@ class PostTag(TitleContent, TimeLogger):
     title = models.CharField(max_length=50, unique=True)
 
 class Post(TitleContent, TimeLogger, HeadImage):
-    subtitle = models.TextField(null=True)
+    subtitle = models.TextField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='blog_posts')
     branch = models.IntegerField(choices=BRANCH, default=0)
     language = models.IntegerField(choices=LANGUAGE, default=0)
